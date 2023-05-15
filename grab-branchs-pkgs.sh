@@ -16,11 +16,6 @@ done
 
 cat $startdir/.pkgs-list | xargs -n 1 -P 8 wget -nc -P $startdir
 
-
-	#[[ -f $check_dir/$pkg ]] || [[ $(wget --spider "https://repo.manjaro.org/repo/$line") ]] && wget -nc -P $startdir "https://repo.manjaro.org/repo/$line"
-	#[[ $(wget --spider "https://repo.manjaro.org/repo/$line") ]] && wget -nc -P $startdir "https://repo.manjaro.org/repo/$line"
-
-
 echo "All files are upload into $1 server"
 
 # Create file wich containing unique filenames
