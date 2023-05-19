@@ -27,3 +27,6 @@ for name in $( cat $startdir/.files-name.list ); do
 done
 
 echo 'Removed old files completed'
+
+# List pkgs
+ls > .$1-pkgs-list 
