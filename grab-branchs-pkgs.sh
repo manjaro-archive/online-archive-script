@@ -12,6 +12,7 @@ rm -f $startdir/.files-name.list
 
 for line in $url; do
 	echo "https://repo.manjaro.org/repo/$line" >> $startdir/.pkgs-list
+    echo "https://repo.manjaro.org/repo/"$line".sig" >> $startdir/.pkgs-list
 done
 
 cat $startdir/.pkgs-list | xargs -n 1 -P 8 wget -nc -P $startdir
