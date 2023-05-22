@@ -2,6 +2,8 @@
 
 set -e
 
+source /home/tuxboyeu/domains/manjaro.tuxboy.eu/public_html/.server_url
+
 #Grab pkgs list from Manjaro repository
 cd /home/tuxboyeu/domains/manjaro.tuxboy.eu/public_html/$1-archive
 startdir=$(pwd)
@@ -11,8 +13,8 @@ rm -f $startdir/.pkgs-list
 rm -f $startdir/.files-name.list
 
 for line in $url; do
-	echo "https://repo.manjaro.org/repo/$line" >> $startdir/.pkgs-list
-    echo "https://repo.manjaro.org/repo/"$line".sig" >> $startdir/.pkgs-list
+	echo "$server_url"/"$line" >> $startdir/.pkgs-list
+    echo "$server_url"/"$line".sig >> $startdir/.pkgs-list
 done
 
 cat $startdir/.pkgs-list | xargs -n 1 -P 8 wget -nc -P $startdir
