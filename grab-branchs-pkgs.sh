@@ -34,9 +34,9 @@ echo "All files are upload into $1 server"
 # Create file wich containing unique filenames
 ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-name.list
 
-# Keep only the last 10 old versions of every file
+# Keep only the last 10 old versions of every file ( considering also the .sig files )
 for name in $( cat $startdir/.files-name.list ); do 
-    ls -t | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' | xargs rm -vf
+    ls -t | grep -E "^$name-+[0-9]" | awk 'NR>20 {print $1}' | xargs rm -vf
 done
 
 echo 'Removed old files completed'
