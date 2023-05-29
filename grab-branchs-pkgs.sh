@@ -27,9 +27,11 @@ for i in $pkg; do
 done
 
 # Download only the necessary pkgs
-[[ -s "$startdir/.pkgs-list" ]] && cat $startdir/.pkgs-list | xargs -n 1 -P 8 wget -nc -P $startdir
-
-echo "All files are upload into $1 server"
+if [[ -s "$startdir/.pkgs-list" ]]; then
+    cat $startdir/.pkgs-list | xargs -n 1 -P 8 wget -nc -P $startdir
+    echo "All files uploaded into $1 server"
+else echo 'Nothing to do, all files already here.'
+fi
 
 # Create file wich containing unique filenames
 ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-name.list
