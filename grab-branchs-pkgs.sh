@@ -42,7 +42,7 @@ for name in $( cat "$startdir/.files-name.list" ); do
 done
 
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
-    cat "$startdir/.del-pkgs-list" | xargs -n 1 -P 8 rm -vf
+    cat "$startdir/.del-pkgs-list" | xargs rm -vf
     echo "====> All unnecessary files have been deleted"
 else echo '====> Nothing to do.'
 fi
