@@ -28,7 +28,7 @@ done
 
 # Download only the necessary pkgs
 if [[ -s "$startdir/.pkgs-list" ]]; then
-    "cat $startdir/.pkgs-list" | xargs -n 1 -P 8 wget -nc -P $startdir
+    cat "$startdir/.pkgs-list" | xargs -n 1 -P 8 wget -nc -P $startdir
     echo "====> All files uploaded into $1 server"
 else echo '====> Nothing to do, all files already here.'
 fi
@@ -37,15 +37,15 @@ fi
 ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-name.list
 
 # Keep only the last 10 old versions of every file ( considering also the .sig files )
-for name in $( "cat $startdir/.files-name.list" ); do 
-    ls -t | grep -E "^$name-+[0-9]" | awk 'NR>20 {print $1}' > .del-pkgs-list #| xargs rm -vf
+for name in $( cat "$startdir/.files-name.list" ); do 
+    ls -t | grep -E "^$name-+[0-9]" | awk 'NR>20 {print $1}' > "$startdir/.del-pkgs-list" #| xargs rm -vf
 done
 
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
-    "cat $startdir/.del-pkgs-list" | xargs -n 1 -P 8 rm -vf
+    cat "$startdir/.del-pkgs-list" | xargs -n 1 -P 8 rm -vf
     echo "====> All unnecessary files have been deleted"
 else echo '====> Nothing to do.'
 fi
 
 # List pkgs
-ls > .$1-pkgs-list 
+ls > "$startdir/.$1-pkgs-list" 
