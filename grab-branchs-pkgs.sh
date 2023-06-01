@@ -54,7 +54,7 @@ if [[ -s "$startdir/.del-pkgs-list" ]]; then
     echo "====> All unnecessary files have been deleted"
     echo
 else echo
-    echo '====> Nothing to do.'
+    echo '====> Nothing to remove.'
     echo
 fi
 
