@@ -12,6 +12,7 @@ url=$(cat $startdir/$1-list)
 pkg=$(cat $startdir/$1-list | cut -d '/' -f5)
 rm -f $startdir/.pkgs-list
 rm -f $startdir/.files-name.list
+rm -f $startdir/.del-pkgs-list 
 
 # Create pkg's url
 for line in $url; do
@@ -29,8 +30,12 @@ done
 # Download only the necessary pkgs
 if [[ -s "$startdir/.pkgs-list" ]]; then
     cat "$startdir/.pkgs-list" | xargs -n 1 -P 8 wget -nc -P $startdir
+    echo
     echo "====> All files uploaded into $1 server"
-else echo '====> Nothing to do, all files already here.'
+    echo
+else echo
+    echo '====> Nothing to do, all files already here.'
+    echo
 fi
 
 # Create file wich containing unique filenames
@@ -38,13 +43,19 @@ ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-na
 
 # Keep only the last 10 old versions of every file ( considering also the .sig files )
 for name in $( cat "$startdir/.files-name.list" ); do 
-    ls -t | grep -E "^$name-+[0-9]" | awk 'NR>20 {print $1}' > "$startdir/.del-pkgs-list" #| xargs rm -vf
+    ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' > "$startdir/.del-pkgs-list" #| xargs rm -vf
+    ls -t -I *.zst -I *.xz | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" 
+
 done
 
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
     cat "$startdir/.del-pkgs-list" | xargs rm -vf
+    echo
     echo "====> All unnecessary files have been deleted"
-else echo '====> Nothing to do.'
+    echo
+else echo
+    echo '====> Nothing to do.'
+    echo
 fi
 
 # List pkgs
