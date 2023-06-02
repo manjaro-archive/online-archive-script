@@ -1,7 +1,5 @@
 #!/bin/env bash
 
-set -e
-
 source /home/tuxboyeu/domains/manjaro.tuxboy.eu/public_html/.server_url
 
 # Grab pkgs list from Manjaro repository
@@ -43,7 +41,7 @@ ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-na
 
 # Keep only the last 10 old versions of every file ( considering also the .sig files )
 for name in $( cat "$startdir/.files-name.list" ); do 
-    ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' > "$startdir/.del-pkgs-list" #| xargs rm -vf
+    ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" #| xargs rm -vf
     ls -t -I *.zst -I *.xz | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" 
 
 done
