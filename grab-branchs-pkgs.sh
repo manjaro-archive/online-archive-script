@@ -37,9 +37,11 @@ else echo
 fi
 
 # Create file wich containing unique filenames
+echo 'Create file wich containing unique filenames'
 ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-name.list
 
 # Keep only the last 10 old versions of every file ( considering also the .sig files )
+echo 'Keep only the last 10 old versions'
 for name in $( cat "$startdir/.files-name.list" ); do 
     ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" # | xargs rm -vf
     ls -t -I *.zst -I *.xz | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" 
@@ -49,6 +51,7 @@ done
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
     echo
     for i in $( cat "$startdir/.del-pkgs-list" ); do
+        echo "Removing $i OK"
         rm -vf "$startdir/$i"
     done
     echo
