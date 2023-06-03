@@ -45,8 +45,8 @@ echo 'Keep only the last 10 old versions'
 for name in $( cat "$startdir/.files-name.list" ); do 
     ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" # | xargs rm -vf
     ls -t -I *.zst -I *.xz | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' >> "$startdir/.del-pkgs-list" 
-    echo 'Done list old files created'
 done
+echo 'Done list old files created'
 
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
     echo
