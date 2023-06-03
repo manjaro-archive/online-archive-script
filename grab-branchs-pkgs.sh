@@ -1,5 +1,5 @@
 #!/bin/env bash
-
+set -x
 source /home/tuxboyeu/domains/manjaro.tuxboy.eu/public_html/.server_url
 
 # Grab pkgs list from Manjaro repository
