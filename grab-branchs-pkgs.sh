@@ -10,7 +10,6 @@ url=$(cat $startdir/$1-list)
 pkg=$(cat $startdir/$1-list | cut -d '/' -f5)
 rm -f $startdir/.pkgs-list
 rm -f $startdir/.files-name.list
-rm -f $startdir/.del-pkgs-list 
 
 # Create pkg's url
 for line in $url; do
@@ -37,16 +36,16 @@ else echo
 fi
 
 # Create file wich containing unique filenames
-echo 'Create file wich containing unique filenames'
 ls | sed -e 's/-\([0-9]\)/ \1/' | awk '{print $1}' | uniq >> $startdir/.files-name.list
+echo 'Create file wich containing unique filenames'
 
 # Keep only the last 10 old versions of every file ( considering also the .sig files )
 echo 'Keep only the last 10 old versions'
 for name in $( cat "$startdir/.files-name.list" ); do 
-    ls -t -I *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' | xargs rm -vf
-    ls -t -I *.zst -I *.xz | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' | xargs rm -vf
+    ls -t *.sig | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' | xargs rm -vf
+    ls -t *.{zst,xz} | grep -E "^$name-+[0-9]" | awk 'NR>10 {print $1}' | xargs rm -vf
 done
-echo '====> Done list old files created'
+echo '====> Done removed old files'
 
 # List pkgs
 ls > "$startdir/.$1-pkgs-list" 
