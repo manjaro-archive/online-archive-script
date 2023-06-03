@@ -51,8 +51,8 @@ done
 if [[ -s "$startdir/.del-pkgs-list" ]]; then
     echo
     for i in $( cat "$startdir/.del-pkgs-list" ); do
-        echo "Removing $i OK"
         rm -vf "$startdir/$i"
+        echo "Removing $i OK"
     done
     echo
     echo "====> All unnecessary files have been deleted"
